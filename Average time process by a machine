@@ -1,0 +1,6 @@
+# Write your MySQL query statement below
+SELECT machine_id, ROUND(avg(runtime),3) processing_time
+FROM(select *, timestamp-lag(timestamp,1,0) over(order by machine_id , process_id , activity_type) runtime
+from Activity) t
+WHERE activity_type='end'
+GROUP BY 1;
